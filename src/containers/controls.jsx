@@ -55,6 +55,10 @@ class Controls extends React.Component {
             action: 'Stop Button'
         });
     }
+    handleJobStartClick (e) {
+        e.preventDefault();
+        alert("job-start");
+    }
     render () {
         const {
             vm, // eslint-disable-line no-unused-vars
@@ -65,6 +69,7 @@ class Controls extends React.Component {
                 {...props}
                 active={this.state.projectRunning}
                 turbo={this.state.turbo}
+                onJobStartClick={this.handleJobStartClick}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
             />

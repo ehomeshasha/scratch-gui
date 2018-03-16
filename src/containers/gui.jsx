@@ -8,6 +8,7 @@ import {openExtensionLibrary} from '../reducers/modals';
 import {
     activateTab,
     BLOCKS_TAB_INDEX,
+    CODE_EDITOR_TAB_INDEX,
     COSTUMES_TAB_INDEX,
     SOUNDS_TAB_INDEX
 } from '../reducers/editor-tab';
@@ -64,6 +65,7 @@ GUI.defaultProps = GUIComponent.defaultProps;
 const mapStateToProps = state => ({
     activeTabIndex: state.editorTab.activeTabIndex,
     blocksTabVisible: state.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
+    codeEditorTabVisible: state.editorTab.activeTabIndex === CODE_EDITOR_TAB_INDEX,
     costumesTabVisible: state.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
     feedbackFormVisible: state.modals.feedbackForm,
     importInfoVisible: state.modals.importInfo,

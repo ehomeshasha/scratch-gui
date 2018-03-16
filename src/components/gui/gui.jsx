@@ -9,6 +9,7 @@ import VM from 'scratch-vm';
 import Renderer from 'scratch-render';
 
 import Blocks from '../../containers/blocks.jsx';
+import CodeEditor from '../../containers/code-editor.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
 import SoundTab from '../../containers/sound-tab.jsx';
@@ -39,6 +40,7 @@ const GUIComponent = props => {
         activeTabIndex,
         basePath,
         blocksTabVisible,
+        codeEditorTabVisible,
         children,
         costumesTabVisible,
         feedbackFormVisible,
@@ -101,6 +103,7 @@ const GUIComponent = props => {
                         >
                             <TabList className={tabClassNames.tabList}>
                                 <Tab className={tabClassNames.tab}>Blocks</Tab>
+                                <Tab className={tabClassNames.tab}>CodeEditor</Tab>
                                 <Tab className={tabClassNames.tab}>Costumes</Tab>
                                 <Tab className={tabClassNames.tab}>Sounds</Tab>
                             </TabList>
@@ -127,6 +130,17 @@ const GUIComponent = props => {
                                             src={addExtensionIcon}
                                         />
                                     </button>
+                                </Box>
+                            </TabPanel>
+                            <TabPanel className={tabClassNames.tabPanel}>
+                                <Box className={styles.codeEditorWrapper}>
+                                    <CodeEditor
+                                        isVisible={codeEditorTabVisible}
+                                        options={{
+
+                                        }}
+                                        vm={vm}
+                                    />
                                 </Box>
                             </TabPanel>
                             <TabPanel className={tabClassNames.tabPanel}>
@@ -172,6 +186,7 @@ GUIComponent.propTypes = {
     basePath: PropTypes.string,
     blocksTabVisible: PropTypes.bool,
     children: PropTypes.node,
+    codeEditorTabVisible: PropTypes.bool,
     costumesTabVisible: PropTypes.bool,
     feedbackFormVisible: PropTypes.bool,
     importInfoVisible: PropTypes.bool,
