@@ -10,6 +10,7 @@ class Controls extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleJobStartClick',
             'handleGreenFlagClick',
             'handleStopAllClick',
             'onProjectRunStart',
@@ -40,6 +41,7 @@ class Controls extends React.Component {
             this.setState({turbo: !this.state.turbo});
             this.props.vm.setTurboMode(!this.state.turbo);
         } else {
+            alert("greenFlag");
             this.props.vm.greenFlag();
             analytics.event({
                 category: 'general',
@@ -56,8 +58,9 @@ class Controls extends React.Component {
         });
     }
     handleJobStartClick (e) {
+        alert("jobstart");
         e.preventDefault();
-        alert("job-start");
+        this.props.vm.runtime._step();
     }
     render () {
         const {
