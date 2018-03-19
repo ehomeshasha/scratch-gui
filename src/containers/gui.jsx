@@ -73,14 +73,20 @@ const mapStateToProps = state => ({
     soundsTabVisible: state.editorTab.activeTabIndex === SOUNDS_TAB_INDEX
 });
 
+const onCodeEditorClick = function () {
+    alert("onCodeEditorClick");
+};
+
 const mapDispatchToProps = dispatch => ({
     onExtensionButtonClick: () => dispatch(openExtensionLibrary()),
-    onActivateTab: tab => dispatch(activateTab(tab))
+    onActivateTab: tab => dispatch(activateTab(tab)),
+    onCodeEditorClick: () => dispatch(onCodeEditorClick())
 });
 
 const ConnectedGUI = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(GUI);
+
 
 export default vmListenerHOC(ConnectedGUI);

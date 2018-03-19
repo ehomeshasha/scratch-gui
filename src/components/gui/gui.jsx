@@ -27,6 +27,7 @@ import layout from '../../lib/layout-constants.js';
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
 
+
 const messages = defineMessages({
     addExtension: {
         id: 'gui.gui.addExtension',
@@ -48,6 +49,7 @@ const GUIComponent = props => {
         intl,
         onExtensionButtonClick,
         onActivateTab,
+        onCodeEditorClick,
         previewInfoVisible,
         soundsTabVisible,
         vm,
@@ -103,7 +105,10 @@ const GUIComponent = props => {
                         >
                             <TabList className={tabClassNames.tabList}>
                                 <Tab className={tabClassNames.tab}>Blocks</Tab>
-                                <Tab className={tabClassNames.tab}>CodeEditor</Tab>
+                                <Tab
+                                    className={tabClassNames.tab}
+                                    onClick={onCodeEditorClick}
+                                >CodeEditor</Tab>
                                 <Tab className={tabClassNames.tab}>Costumes</Tab>
                                 <Tab className={tabClassNames.tab}>Sounds</Tab>
                             </TabList>
@@ -192,6 +197,7 @@ GUIComponent.propTypes = {
     importInfoVisible: PropTypes.bool,
     intl: intlShape.isRequired,
     onActivateTab: PropTypes.func,
+    onCodeEditorClick: PropTypes.func,
     onExtensionButtonClick: PropTypes.func,
     onTabSelect: PropTypes.func,
     previewInfoVisible: PropTypes.bool,
