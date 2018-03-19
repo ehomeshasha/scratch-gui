@@ -2,6 +2,10 @@
 @import "../../css/colors.css";
 
 $border-style: 1px solid $ui-pane-border;
+
+
+
+
 /**
 .blocks :global(.injectionDiv){
     position: absolute;

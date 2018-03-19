@@ -19,6 +19,8 @@ import {activateColorPicker} from '../reducers/color-picker';
 import {closeExtensionLibrary} from '../reducers/modals';
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 
+import PubSub from 'pubsub-js';
+
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
     object[property] = function () {
@@ -50,7 +52,8 @@ class Blocks extends React.Component {
             'onVisualReport',
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
-            'setBlocks'
+            'setBlocks',
+            'onJobStart'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.state = {
@@ -78,6 +81,10 @@ class Blocks extends React.Component {
         this.props.vm.setLocale(this.props.locale, this.props.messages);
 
         analytics.pageview('/editors/blocks');
+
+
+        this.token = PubSub.subscribe('jobstart_topic', this.onJobStart);
+
     }
     shouldComponentUpdate (nextProps, nextState) {
         return (
@@ -113,6 +120,7 @@ class Blocks extends React.Component {
         }
     }
     componentWillUnmount () {
+        PubSub.unsubscribe(this.token);
         this.detachVM();
         this.workspace.dispose();
     }
@@ -153,6 +161,21 @@ class Blocks extends React.Component {
             block.inputList[0].fieldRow[0].setValue(value);
         }
     }
+
+    onJobStart () {
+        alert("blocks.onJobStart");
+        let blocks = this.workspace.getTopBlocks();
+        console.log(blocks);
+        for (const block of blocks) {
+            this.props.vm.runtime.toggleScript(block.id);
+        }
+
+
+
+
+
+    }
+
     onTargetsUpdate () {
         if (this.props.vm.editingTarget) {
             ['glide', 'move', 'set'].forEach(prefix => {
@@ -175,6 +198,7 @@ class Blocks extends React.Component {
         }
     }
     onScriptGlowOn (data) {
+        console.log(data.id);
         this.workspace.glowStack(data.id, true);
     }
     onScriptGlowOff (data) {

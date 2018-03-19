@@ -11,7 +11,7 @@ const CodeEditorComponent = props => {
     } = props;
     return (
         <Box
-            className={styles.blocks}
+            // className={styles.blocks}
             // componentRef={componentRef}
             {...componentProps}
         />

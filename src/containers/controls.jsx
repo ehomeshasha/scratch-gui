@@ -5,6 +5,7 @@ import VM from 'scratch-vm';
 
 import analytics from '../lib/analytics';
 import ControlsComponent from '../components/controls/controls.jsx';
+import PubSub from 'pubsub-js';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -57,10 +58,22 @@ class Controls extends React.Component {
             action: 'Stop Button'
         });
     }
+
+
     handleJobStartClick (e) {
         alert("jobstart");
         e.preventDefault();
-        this.props.vm.runtime._step();
+        PubSub.publish('jobstart_topic', 'hello world!');
+
+
+        // this.emit(Runtime.SCRIPT_GLOW_ON, {id: topBlockId});
+        // this.props.vm.runtime.glowScript(, true);
+        // this.props.vm.runtime._step();
+        // console.log(this.props.vm);
+        // console.log(this.props.vm.runtime);
+        // console.log(this.props.vm.runtime.threads);
+
+        // this.props.vm.runtime.glowScript(topBlockId, true);
     }
     render () {
         const {
