@@ -5,6 +5,9 @@ import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
 import {openExtensionLibrary} from '../reducers/modals';
+
+import PubSub from 'pubsub-js';
+
 import {
     activateTab,
     BLOCKS_TAB_INDEX,
@@ -74,7 +77,10 @@ const mapStateToProps = state => ({
 });
 
 const onCodeEditorClick = function () {
-    alert("onCodeEditorClick");
+    alert("ce_refresh event publish");
+    PubSub.publish('ce_refresh');
+
+
 };
 
 const mapDispatchToProps = dispatch => ({

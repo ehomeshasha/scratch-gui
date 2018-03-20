@@ -314,6 +314,8 @@ const sound = function () {
 const events = function () {
     return `
     <category name="Events" colour="#FFD500" secondaryColour="#CC9900">
+        <block type="string_length"/>
+        <block type="event_whenjobstartclicked"/>
         <block type="event_whenflagclicked"/>
         <block type="event_whenkeypressed">
         </block>

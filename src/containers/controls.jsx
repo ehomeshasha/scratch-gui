@@ -61,9 +61,9 @@ class Controls extends React.Component {
 
 
     handleJobStartClick (e) {
-        alert("jobstart");
         e.preventDefault();
-        PubSub.publish('jobstart_topic', 'hello world!');
+        alert("job_start event publist");
+        PubSub.publish('job_start');
 
 
         // this.emit(Runtime.SCRIPT_GLOW_ON, {id: topBlockId});

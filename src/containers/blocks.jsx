@@ -19,6 +19,7 @@ import {activateColorPicker} from '../reducers/color-picker';
 import {closeExtensionLibrary} from '../reducers/modals';
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 
+
 import PubSub from 'pubsub-js';
 
 const addFunctionListener = (object, property, callback) => {
@@ -53,7 +54,8 @@ class Blocks extends React.Component {
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
             'setBlocks',
-            'onJobStart'
+            'onJobStart',
+            'onCodeEditorRefresh'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.state = {
@@ -61,6 +63,7 @@ class Blocks extends React.Component {
             prompt: null
         };
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
+        this.pubsub_tokens = [];
     }
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
@@ -71,6 +74,7 @@ class Blocks extends React.Component {
             this.props.options,
             {toolbox: this.props.toolboxXML}
         );
+        console.log(workspaceConfig);
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
 
         // @todo change this when blockly supports UI events
@@ -83,7 +87,8 @@ class Blocks extends React.Component {
         analytics.pageview('/editors/blocks');
 
 
-        this.token = PubSub.subscribe('jobstart_topic', this.onJobStart);
+        this.pubsub_tokens.push(PubSub.subscribe('job_start', this.onJobStart));
+        this.pubsub_tokens.push(PubSub.subscribe('ce_refresh', this.onCodeEditorRefresh));
 
     }
     shouldComponentUpdate (nextProps, nextState) {
@@ -163,17 +168,30 @@ class Blocks extends React.Component {
     }
 
     onJobStart () {
-        alert("blocks.onJobStart");
-        let blocks = this.workspace.getTopBlocks();
+        alert("job_start event received");
+        const blocks = this.workspace.getTopBlocks();
         console.log(blocks);
         for (const block of blocks) {
-            this.props.vm.runtime.toggleScript(block.id);
+            if(block.type == "event_whenjobstartclicked") {
+                this.props.vm.runtime.toggleScript(block.id);
+            }
         }
+    }
 
+    onCodeEditorRefresh () {
+        alert("ce_refresh event received");
+        // const code = generator.workspaceToCode(this.workspace);
+        const blocks = this.workspace.getTopBlocks();
+        console.log(blocks[0]);
+        const generator = new this.ScratchBlocks.Generator('Python');
 
-
-
-
+        // const generator = this.ScratchBlocks.Python;
+        console.log(this.ScratchBlocks);
+        console.log(this.ScratchBlocks.Blocks);
+        console.log(this.ScratchBlocks.Python);
+        const code = generator.blockToCode(blocks[0], this.ScratchBlocks.Blocks);
+        alert(code);
+        console.log(code);
     }
 
     onTargetsUpdate () {
