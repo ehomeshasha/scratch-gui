@@ -184,12 +184,12 @@ class Blocks extends React.Component {
         const blocks = this.workspace.getTopBlocks();
         console.log(blocks[0]);
         const generator = new this.ScratchBlocks.Generator('Python');
-
-        // const generator = this.ScratchBlocks.Python;
-        console.log(this.ScratchBlocks);
-        console.log(this.ScratchBlocks.Blocks);
-        console.log(this.ScratchBlocks.Python);
-        const code = generator.blockToCode(blocks[0], this.ScratchBlocks.Blocks);
+        //
+        // // const generator = this.ScratchBlocks.Python;
+        // console.log(this.ScratchBlocks);
+        // console.log(this.ScratchBlocks.Blocks);
+        // console.log(this.ScratchBlocks.Python);
+        const code = generator.blockToCode(blocks[0]);
         alert(code);
         console.log(code);
     }

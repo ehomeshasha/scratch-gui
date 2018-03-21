@@ -5,9 +5,6 @@ const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 const motion = function (isStage, targetId) {
     return `
     <category name="Motion" colour="#4C97FF" secondaryColour="#3373CC">
-        ${isStage ? `
-        <label text="Stage selected: no motion blocks"></label>
-        ` : `
         <block type="motion_movesteps">
             <value name="STEPS">
                 <shadow type="math_number">
@@ -126,7 +123,7 @@ const motion = function (isStage, targetId) {
         ${blockSeparator}
         <block id="${targetId}_xposition" type="motion_xposition"/>
         <block id="${targetId}_yposition" type="motion_yposition"/>
-        <block id="${targetId}_direction" type="motion_direction"/>`}
+        <block id="${targetId}_direction" type="motion_direction"/>
         ${categorySeparator}
     </category>
     `;
